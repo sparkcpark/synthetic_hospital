@@ -1,0 +1,10 @@
+# Single-specialty cloze deck. Specialty is fixed per file via specialty_fallback
+# when it cannot be read from the deck hierarchy or tags. Duplicate this file
+# (one per specialty deck) and set specialty_fallback accordingly.
+name: fact_specialty_cardiology
+role: fact
+parser: cloze_specialty_deck
+card_format: cloze_fact
+filename_globs: ["fact_specialty_cardiology.apkg", "fact_specialty_*.apkg"]
+specialty_fallback: "Cardiology"
+dedup_priority: 1

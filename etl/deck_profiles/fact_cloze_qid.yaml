@@ -1,0 +1,11 @@
+# Cloze fact deck keyed by a QID tag, with Objective/Subject/System/Topic fields.
+name: fact_cloze_qid
+role: fact
+parser: cloze_qid
+card_format: cloze_fact
+filename_globs: ["fact_review_a.apkg", "fact_qid_*.apkg"]
+note_model_substrings: ["cloze qid model"]
+dedup_priority: 15
+
+tag_config:
+  qid_namespace: "QSRC"        # leading token of this deck's QID tags

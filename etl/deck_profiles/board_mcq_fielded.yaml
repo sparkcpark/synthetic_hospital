@@ -1,0 +1,10 @@
+# Board-exam MCQ deck whose fields are already separated
+# (dedicated Question_Stem / Correct_Answer / per-choice explanation fields).
+name: board_mcq_fielded
+role: board_exam
+parser: mcq_fielded
+card_format: mcq_vignette
+filename_globs: ["board_exam_deck_a.apkg", "board_fielded_*.apkg"]
+note_model_substrings: ["mcq fielded model"]
+dedup_priority: 19
+tag_root: "Root"

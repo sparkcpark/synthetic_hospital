@@ -1,0 +1,14 @@
+# Multi-model review deck; specialty/subject derived from a "::"-delimited tag
+# hierarchy (namespace::step::specialty::subspecialty).
+name: fact_review_hierarchy
+role: fact
+parser: cloze_review_hierarchy
+card_format: cloze_fact
+filename_globs: ["fact_review_b.apkg", "fact_review_hier_*.apkg"]
+dedup_priority: 16
+tag_root: "Review"
+
+tag_config:
+  hier_root: "REVIEW"          # tag hierarchy root
+  hier_level2: "L2"            # second-level token
+  subject_namespace: "SUBJ"    # alternate subject-only tag namespace

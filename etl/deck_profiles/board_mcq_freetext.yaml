@@ -1,0 +1,10 @@
+# Board-exam MCQ deck where the whole vignette + choices live in one Question
+# field and must be split out during parsing.
+name: board_mcq_freetext
+role: board_exam
+parser: mcq_freetext
+card_format: mcq_vignette
+filename_globs: ["board_exam_deck_b.apkg", "board_freetext_*.apkg"]
+note_model_substrings: ["mcq freetext model"]
+dedup_priority: 20
+tag_root: "Root"

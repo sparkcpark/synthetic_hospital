@@ -1,0 +1,23 @@
+# Phase F: Bash sandbox for agent evaluation
+# Automatically merged with docker-compose.yml by Docker Compose
+services:
+  bash_sandbox:
+    image: postgres:16-alpine
+    command: sleep infinity
+    environment:
+      PGHOST: postgres
+      PGPORT: 5432
+      PGDATABASE: epic_sim
+      PGUSER: bash_readonly
+      PGPASSWORD: readonly_password
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+          cpus: "1.0"
+    depends_on:
+      postgres:
+        condition: service_healthy

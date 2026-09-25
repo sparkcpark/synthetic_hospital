@@ -1,0 +1,7 @@
+# Document whose section headings are detected by font size / weight.
+name: doc_font_headings
+layout: font_headings
+display_name: "Example Font-Heading Notes"
+filename_globs: ["example_step_notes.pdf", "doc_font_*.pdf"]
+topic_from: section_title
+context_style: hierarchy

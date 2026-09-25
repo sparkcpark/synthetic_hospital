@@ -1,0 +1,17 @@
+# Cloze deck derived from lecture/podcast notes; topic is enriched later by LLM.
+name: fact_podcast
+role: fact
+parser: cloze_podcast
+card_format: cloze_fact
+filename_globs: ["fact_podcast_*.apkg"]
+dedup_priority: 18
+
+tag_config:
+  podcast_root: "PodDeck"      # leading tag token
+  podcast_branch: "MAIN"       # main-content branch
+  optional_branch: "Optional"  # supplementary-source branch
+  fixed_source_subjects:       # exact source token -> subject
+    SourceP: "Pathology"
+    SourcePeds: "Pediatrics"
+  subcat_source: "SourceQ"     # source whose subcategory is looked up
+  keyword_source_prefix: "srck"  # source prefix -> keyword match

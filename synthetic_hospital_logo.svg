@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <title>Synthetic Hospital logo — pulse cross</title>
+  <circle cx="120" cy="120" r="112" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+  <rect x="100" y="40" width="40" height="160" rx="10" fill="#0d9488"/>
+  <rect x="40" y="100" width="160" height="40" rx="10" fill="#0d9488"/>
+  <path d="M50,120 L82,120 L94,86 L112,154 L124,96 L134,120 L190,120" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,9 @@
+# Table-of-contents driven document (headings come from the TOC).
+name: doc_toc
+layout: toc
+display_name: "Example TOC-based Notes"
+filename_globs: ["example_internal_medicine.pdf", "example_biostats.pdf",
+                 "example_psychiatry.pdf", "example_obgyn.pdf",
+                 "example_pediatrics.pdf", "doc_toc_*.pdf"]
+topic_from: section_title
+context_style: hierarchy

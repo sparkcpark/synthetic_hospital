@@ -1,0 +1,60 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    environment:
+      POSTGRES_DB: epic_sim
+      POSTGRES_USER: epic_sim
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-dev_password}
+    shm_size: '256m'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U epic_sim"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      target: app          # the Dockerfile's last stage is the all-in-one image; compose wants the plain app
+    image: ghcr.io/sparkcpark/synthetic-hospital:1.3
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    environment:
+      EPIC_SIM_DATABASE_URL: postgresql+asyncpg://epic_sim:${POSTGRES_PASSWORD:-dev_password}@postgres:5432/epic_sim
+      EPIC_SIM_DATABASE_URL_SYNC: postgresql+psycopg://epic_sim:${POSTGRES_PASSWORD:-dev_password}@postgres:5432/epic_sim
+      DATABASE_URL: postgresql://epic_sim:${POSTGRES_PASSWORD:-dev_password}@postgres:5432/epic_sim
+      EPIC_SIM_REDIS_URL: redis://redis:6379/0
+      EPIC_SIM_FHIR_BASE_URL: http://localhost:${APP_PORT:-8000}/fhir
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      # Shared secret for the /score (reward) endpoint; keep it away from the policy under training.
+      EPIC_SIM_SCORER_TOKEN: ${EPIC_SIM_SCORER_TOKEN:-dev-scorer-token-change-in-production}
+    volumes:
+      # The released benchmark database, loaded into Postgres on first boot.
+      - ./benchmark_v1.3.db:/data/benchmark_v1.3.db:ro
+      # Evaluation outputs land here on the host.
+      - ./results:/app/results
+      # Optional: SNOMED CT / LOINC releases for the terminology tools (any version, any
+      # folder layout). Loaded automatically on the next boot; ICD-10-CM is downloaded.
+      # - ./data/ontology:/app/data/ontology:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  pgdata:

@@ -1,0 +1,13 @@
+# Agent container for a Synthetic Hospital Harbor task. The simulator itself runs
+# in the `app` service (see docker-compose.yaml); this image only needs a shell,
+# curl/jq for ad-hoc calls, and the sh-agent command line.
+FROM python:3.12-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends curl jq ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY agent_cli.py /usr/local/bin/sh-agent
+RUN chmod +x /usr/local/bin/sh-agent && mkdir -p /logs/verifier /logs/agent
+
+ENV SH_BASE_URL=http://app:8000

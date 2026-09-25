@@ -1,0 +1,13 @@
+# Large general cloze deck with rich resource-reference fields and a chapter-based
+# tag hierarchy used to derive subject/organ_system.
+name: fact_resource_tagged
+role: fact
+parser: cloze_resource
+card_format: cloze_fact
+filename_globs: ["fact_general.apkg", "fact_resource_*.apkg"]
+dedup_priority: 30
+
+tag_config:
+  resource_fields: ["Resource A", "Resource B", "Resource C"]
+  shelf_markers: ["!Shelf", "Shelf"]
+  topic_exclude_prefixes: ["no ", "!"]

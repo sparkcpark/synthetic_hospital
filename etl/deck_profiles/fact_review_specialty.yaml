@@ -1,0 +1,7 @@
+# Review deck where specialty comes from the deck-name hierarchy (Step::Specialty).
+name: fact_review_specialty
+role: fact
+parser: cloze_review_specialty
+card_format: cloze_fact
+filename_globs: ["fact_review_spec_*.apkg"]
+dedup_priority: 17

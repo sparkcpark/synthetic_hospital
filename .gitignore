@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+.pytest_cache/
+
+# SQLite sidecar files (keep the .db itself, ignore its transient journals)
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Secrets / environment
+.env
+.env.local
+
+# IDE / OS
+.DS_Store
+.claude/
+
+# Rebuilt / derived data — created by the ETL and eval runs, not committed.
+# (The released patient_profiles.db lives at the repo root and IS committed.)
+data/
+apkg/
+doc/
+exports/
+results/
+
+# Exported Harbor tasks and Harbor job output (contain per-export scorer tokens)
+harbor_tasks/
+jobs/

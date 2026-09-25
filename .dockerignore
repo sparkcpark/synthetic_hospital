@@ -1,0 +1,24 @@
+# Data is mounted at run time by the default target; only the with-data/allinone
+# targets copy benchmark_v1.3.db, so it is the one database allowed into the context.
+*.db
+!benchmark_v1.3.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.jsonl
+data/
+results/
+exports/
+apkg/
+doc/
+
+# Local environments and caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.git/
+.env
+.env.local
+.DS_Store
+.claude/

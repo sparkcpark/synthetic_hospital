@@ -1,0 +1,8 @@
+# Bullet/point-per-line document. Section titles are not reliable topics, so
+# topics are enriched by LLM later and context is built from the episode header.
+name: doc_bullets
+layout: bullets
+display_name: "Example Podcast/Lecture Notes"
+filename_globs: ["example_podcast_notes.pdf", "doc_bullets_*.pdf"]
+topic_from: llm
+context_style: episode
