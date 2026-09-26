@@ -32,6 +32,7 @@ COPY epic_sim ./epic_sim
 COPY eval ./eval
 COPY etl ./etl
 COPY scripts ./scripts
+COPY ui ./ui
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 RUN chmod +x /usr/local/bin/entrypoint.sh \
