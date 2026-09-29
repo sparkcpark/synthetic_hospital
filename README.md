@@ -147,6 +147,15 @@ Models are accessed via OpenRouter; set `OPENROUTER_API_KEY`. The registry entri
 `SH_LLM_GATEWAY_URL` (default `http://localhost:8080`) and need your own gateway, whereas the `*-or`
 entries reach the same models through OpenRouter.
 
+For compatible endpoints (e.g. Nemotron), configure chat-template options through
+`ModelConfig.extra`, for example:
+
+```python
+extra={"chat_template_kwargs": {"enable_thinking": True}}
+```
+
+`False` is also forwarded; omit the option when the server does not support it.
+
 ```bash
 python -m eval.cli run --task patient_diagnosis --model <model> --split public --strategy cot
 python -m eval.cli score --run-id <id>
@@ -165,51 +174,6 @@ python -m eval.cli run --task context_summarization --granularity specialty --mo
 ```
 
 Agentic (tool-use) evaluation against the live EHR simulator uses `eval/agents/` with the read-only bash sandbox defined in `docker-compose.override.yml`. The `bash_readonly` role that the sandbox uses is created automatically by the container entrypoint (or by `scripts/setup_bash_readonly.sql` in a manual install).
-
-### Nemotron-compatible endpoints
-
-For a server that supports OpenAI-compatible chat completions and
-`chat_template_kwargs`, supply the endpoint, exact served model ID, and credential
-through your own environment. No hosted endpoint or model revision is assumed.
-The following is an opt-in training-split smoke example, not a published result:
-
-```python
-import os
-
-from eval.config import AdapterType, MODEL_REGISTRY, ModelConfig
-from eval.runner import run_evaluation
-
-config = ModelConfig(
-    name="nemotron-custom",
-    adapter_type=AdapterType.OPENAI_COMPATIBLE,
-    base_url=os.environ["NEMOTRON_BASE_URL"].rstrip("/"),
-    api_key_env="NEMOTRON_API_KEY",
-    model_id=os.environ["NEMOTRON_MODEL_ID"],
-    max_tokens=32768,
-    timeout_secs=600.0,
-    temperature=0.0,
-    extra={"chat_template_kwargs": {"enable_thinking": True}},
-)
-MODEL_REGISTRY[config.name] = config
-run_evaluation(
-    task="patient_diagnosis", model_name=config.name, split="train",
-    prompt_strategy="cot", pilot=1, workers=1,
-)
-```
-
-Explicit `enable_thinking=False` is also forwarded. Omit `chat_template_kwargs`
-for endpoints that do not support it; existing model payloads remain unchanged.
-Use a token budget supported by your deployment, record the exact model/checkpoint
-and tokenizer revisions when available, and inspect `raw_json` for returned model
-identity, usage, and `finish_reason`. Empty or truncated responses are not evidence
-of successful task completion. This adapter option alone does not add stricter
-coverage accounting or change any benchmark parser, scorer, or split.
-
-Token counts are not dollar costs. The legacy cost helper treats unregistered
-models as zero-price; do not interpret that fallback as a free deployment or use
-cost-normalized rankings without independently supplied prices. Never put API
-credentials, proprietary endpoint details, or raw reasoning traces in result
-contributions.
 
 ## Scoring Endpoint (rewards)
 
