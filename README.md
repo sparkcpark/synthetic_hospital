@@ -60,6 +60,10 @@ docker compose up -d                 # first boot loads the database (~10 s), th
 docker compose logs -f app           # watch the load; "[entrypoint] database ready: 1268 patients" means done
 ```
 
+Chart browser (sign-in + patient list + notes): open http://localhost:8000/ after the stack is healthy.
+Register a user once via `POST /auth/register` (see [AGENTS.md](AGENTS.md)), then sign in on `/`.
+Agent/tool protocol for clinical agents: **[AGENTS.md](AGENTS.md)**.
+
 Everything else runs inside the same image, against the loaded database:
 
 ```bash

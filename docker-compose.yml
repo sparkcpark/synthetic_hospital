@@ -47,6 +47,8 @@ services:
       - ./benchmark_v1.3.db:/data/benchmark_v1.3.db:ro
       # Evaluation outputs land here on the host.
       - ./results:/app/results
+      # Chart browser (also baked into the image; bind-mount keeps live edits without rebuild).
+      - ./ui:/app/ui:ro
       # Optional: SNOMED CT / LOINC releases for the terminology tools (any version, any
       # folder layout). Loaded automatically on the next boot; ICD-10-CM is downloaded.
       # - ./data/ontology:/app/data/ontology:ro

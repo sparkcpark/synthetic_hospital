@@ -80,6 +80,22 @@ def create_app() -> FastAPI:
         redis_ok = getattr(app.state, "redis", None) is not None
         return {"status": "ok", "redis": redis_ok}
 
+    # Lightweight chart browser (optional; present when ui/ is shipped or mounted)
+    from pathlib import Path
+
+    from fastapi.responses import FileResponse
+    from fastapi.staticfiles import StaticFiles
+
+    ui_dir = Path(__file__).resolve().parents[2] / "ui"
+    if not ui_dir.is_dir():
+        ui_dir = Path("/app/ui")
+    if ui_dir.is_dir():
+        app.mount("/ui", StaticFiles(directory=str(ui_dir)), name="ui")
+
+        @app.get("/")
+        async def chart_ui():
+            return FileResponse(ui_dir / "index.html")
+
     return app
 
 

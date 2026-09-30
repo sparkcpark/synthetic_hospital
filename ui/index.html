@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Synthetic Hospital — Chart</title>
+  <link rel="stylesheet" href="/ui/app.css" />
+</head>
+<body>
+  <div id="login" class="panel login">
+    <div class="brand">
+      <div class="cross" aria-hidden="true"></div>
+      <h1>Synthetic Hospital</h1>
+      <p>Open longitudinal EHR (zero PHI)</p>
+    </div>
+    <form id="login-form">
+      <label>Username <input name="username" value="dr.demo" autocomplete="username" required /></label>
+      <label>Password <input name="password" type="password" value="demo1234" autocomplete="current-password" required /></label>
+      <button type="submit">Sign in</button>
+      <p id="login-err" class="err" hidden></p>
+      <p class="hint">Demo: <code>dr.demo</code> / <code>demo1234</code> (attending)</p>
+    </form>
+  </div>
+
+  <div id="app" class="app" hidden>
+    <header class="top">
+      <div class="brand-inline">
+        <span class="cross sm"></span>
+        <strong>Synthetic Hospital</strong>
+      </div>
+      <div class="search">
+        <input id="q" type="search" placeholder="Search MRN or name (e.g. 1672)" />
+        <button id="btn-search" type="button">Find</button>
+      </div>
+      <div class="who">
+        <span id="who"></span>
+        <button id="logout" type="button" class="ghost">Sign out</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="rail">
+        <h2>Patients</h2>
+        <ul id="patient-list"></ul>
+        <div class="pager">
+          <button id="prev" type="button" class="ghost">Prev</button>
+          <button id="next" type="button" class="ghost">Next</button>
+        </div>
+      </aside>
+      <section class="chart" id="chart">
+        <p class="muted">Select a patient to open the chart.</p>
+      </section>
+    </main>
+  </div>
+
+  <script src="/ui/app.js"></script>
+</body>
+</html>
