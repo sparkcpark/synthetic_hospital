@@ -147,6 +147,15 @@ Models are accessed via OpenRouter; set `OPENROUTER_API_KEY`. The registry entri
 `SH_LLM_GATEWAY_URL` (default `http://localhost:8080`) and need your own gateway, whereas the `*-or`
 entries reach the same models through OpenRouter.
 
+For compatible endpoints (e.g. Nemotron), configure chat-template options through
+`ModelConfig.extra`, for example:
+
+```python
+extra={"chat_template_kwargs": {"enable_thinking": True}}
+```
+
+`False` is also forwarded; omit the option when the server does not support it.
+
 ```bash
 python -m eval.cli run --task patient_diagnosis --model <model> --split public --strategy cot
 python -m eval.cli score --run-id <id>

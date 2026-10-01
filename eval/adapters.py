@@ -226,6 +226,11 @@ class OpenAICompatibleAdapter(ModelAdapter):
         # tool-less providers and return 429s, which stalls the agent loop.
         if self.config.extra.get("provider"):
             payload["provider"] = self.config.extra["provider"]
+        if "chat_template_kwargs" in self.config.extra:
+            template_kwargs = self.config.extra["chat_template_kwargs"]
+            if not isinstance(template_kwargs, dict):
+                raise ValueError("chat_template_kwargs must be a JSON object")
+            payload["chat_template_kwargs"] = dict(template_kwargs)
 
         t0 = time.monotonic()
         with httpx.Client(timeout=self.config.timeout_secs) as client:
